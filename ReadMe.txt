@@ -1,0 +1,1 @@
+run: javac Suggest.java && java Suggest
