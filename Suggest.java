@@ -74,7 +74,6 @@ public class Suggest {
         System.out.print("Do you have an account? (y/n): ");
        
         String prevAccount = in.nextLine();
-        String toReturn = "";
 
         if(prevAccount.equals("y")){
             loginOrSignup(true);
@@ -110,7 +109,7 @@ public class Suggest {
     }
 
     private static String login(String ary[]){
-        File inputFile = new File("passwords.txt");
+        // File inputFile = new File("passwords.txt");
         byte[] salt, sPwd;
         
         String usernameInput = ary[0];
@@ -130,16 +129,11 @@ public class Suggest {
                 salt = stringToBinary(sArray[2]);
 
                 if (usernameInput.equals(sArray[0]) && isExpectedPassword(passwordInput, salt, sPwd)){//passwordInput.equals(sArray[1])){
-                    System.out.println("Login Successful\n");
                     return ("Login Successful");
-                } 
-                else {
-                    System.out.println("Login Failed\n");
                 }
             }
             in.close();
             return ("Login Failed");
-            
         } catch (FileNotFoundException e) {
             return ("File Not Found");
         }
@@ -184,20 +178,39 @@ public class Suggest {
     }
 
     private static boolean checkSignupInput(String ary[]){
-        String username = ary[0];
+        // String username = ary[0];
         String password = ary[1];
+        String keyboard = "qwertyuiopasdfghjklzxcvbnm";
         Pattern letterPatter = Pattern.compile("[a-z ]", Pattern.CASE_INSENSITIVE);
         Pattern digitPatter = Pattern.compile("[0-9 ]");
         boolean validInputs = true;
-        boolean consecutiveInts, inverseConsecutiveInts, consecutiveChars, inverseConsecutiveChars;
+        boolean consecutiveInts, inverseConsecutiveInts, consecutiveChars, inverseConsecutiveChars, consecutiveKeyboardChars, inverseConsecutiveKeyboardChars;
         char prevChar = password.charAt(0);
         int count = 0;
         int[] intAry = new int[4];
         int[] charAry = new int[4];
 
+        try{
+            Scanner in = new Scanner(new File("commonPasswords.txt"));
+            while(in.hasNextLine()){
+                String s = in.nextLine();
+                if(password.equals(s)){
+                    validInputs = false;
+                    System.out.println("This password is too common");
+                }
+            }
+            in.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
         if(password.length() < 8){
             validInputs = false;
             System.out.println("Password must be at least 8 characters long");
+        }
+        if(password.contains(",")){
+            validInputs = false;
+            System.out.println("Password must not contain commas");
         }
         if(!letterPatter.matcher(password).find()){
             validInputs = false;
