@@ -109,11 +109,9 @@ public class Suggest {
     }
 
     private static String login(String ary[]){
-        // File inputFile = new File("passwords.txt");
         byte[] salt, sPwd;
         
         String usernameInput = ary[0];
-        // String passwordInput = ary[1];
         char[] passwordInput = new char[ary[1].length()];
         for(int i=0; i < ary[1].length(); i++){
             passwordInput[i] = ary[1].charAt(i);
@@ -178,17 +176,23 @@ public class Suggest {
     }
 
     private static boolean checkSignupInput(String ary[]){
-        // String username = ary[0];
         String password = ary[1];
         String keyboard = "qwertyuiopasdfghjklzxcvbnm";
+        String inverseKeyboard = "mnbvcxzlkjhgfdsapoiuytrewq";
         Pattern letterPatter = Pattern.compile("[a-z ]", Pattern.CASE_INSENSITIVE);
         Pattern digitPatter = Pattern.compile("[0-9 ]");
         boolean validInputs = true;
-        boolean consecutiveInts, inverseConsecutiveInts, consecutiveChars, inverseConsecutiveChars, consecutiveKeyboardChars, inverseConsecutiveKeyboardChars;
+        boolean consecutiveInts, inverseConsecutiveInts, consecutiveChars, inverseConsecutiveChars, consecutiveKeyboard, inverseConsecutiveKeyboard;
         char prevChar = password.charAt(0);
         int count = 0;
         int[] intAry = new int[4];
         int[] charAry = new int[4];
+        int[] keyboardAry = new int[keyboard.length()];
+        int[] inverseKeyboardAry = new int[inverseKeyboard.length()];
+        for(int j=0; j < keyboard.length(); j++){
+            keyboardAry[j] = keyboard.charAt(j);
+            inverseKeyboardAry[j] = inverseKeyboard.charAt(j);
+        }
 
         try{
             Scanner in = new Scanner(new File("commonPasswords.txt"));
@@ -220,6 +224,7 @@ public class Suggest {
             validInputs = false;
             System.out.println("Password must contain a digit");
         }
+        // check for consectutive digets, letters, and keyboard strokes
         for(int i = 0; i < password.length(); i++){
             if(i<password.length()-3){
                 if(Character.isDigit(password.charAt(i)) && 
@@ -261,6 +266,8 @@ public class Suggest {
                     charAry[3] = password.charAt(i+3);
                     consecutiveChars = true;
                     inverseConsecutiveChars = true;
+                    consecutiveKeyboard = true;
+                    inverseConsecutiveKeyboard = true;
                     for(int j = 0; j < 3; j++){
                         if(charAry[j]+1 != charAry[j+1]){
                             consecutiveChars = false;
@@ -275,6 +282,34 @@ public class Suggest {
                         validInputs = false;
                         System.out.println("Password must not contain consecutive letters");
                     }
+
+                    for(int j = 0; j < keyboardAry.length; j++){
+                        for(int x = 0; x < 3; x++){
+                            if(keyboardAry[j] == charAry[x]){
+                                if(j != keyboardAry.length-1){
+                                    if(keyboardAry[j+1] != charAry[x+1]) consecutiveKeyboard = false;
+                                } else {
+                                    if(consecutiveKeyboard) consecutiveKeyboard = false;
+                                }
+                            }
+                        }
+                    }
+                    for(int j = 0; j < inverseKeyboardAry.length-1; j++){
+                        for(int x = 0; x < 3; x++){
+                            if(inverseKeyboardAry[j] == charAry[x]){
+                                if(j != inverseKeyboardAry.length-1){
+                                    if(inverseKeyboardAry[j+1] != charAry[x+1]) inverseConsecutiveKeyboard = false;
+                                } else {
+                                    if(inverseConsecutiveKeyboard) inverseConsecutiveKeyboard = false;
+                                }
+                            }
+                        }
+                    }
+                    if(consecutiveKeyboard || inverseConsecutiveKeyboard){
+                        validInputs = false;
+                        System.out.println("Password must not contain consecutive keyboard inputs");
+                    }
+                    
                 } else {
                     charAry = new int[4];
                 }
