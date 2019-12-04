@@ -11,6 +11,7 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.SecretKeyFactory;
 import javax.xml.bind.DatatypeConverter;
+import java.lang.Character;
 
 public class Suggest {
     private static final Random RANDOM = new SecureRandom();
@@ -260,10 +261,10 @@ public class Suggest {
                 Character.isLetter(password.charAt(i+1)) &&
                 Character.isLetter(password.charAt(i+2)) &&
                 Character.isLetter(password.charAt(i+3)) ){
-                    charAry[0] = password.charAt(i);
-                    charAry[1] = password.charAt(i+1);
-                    charAry[2] = password.charAt(i+2);
-                    charAry[3] = password.charAt(i+3);
+                    charAry[0] = Character.toLowerCase(password.charAt(i));
+                    charAry[1] = Character.toLowerCase(password.charAt(i+1));
+                    charAry[2] = Character.toLowerCase(password.charAt(i+2));
+                    charAry[3] = Character.toLowerCase(password.charAt(i+3));
                     consecutiveChars = true;
                     inverseConsecutiveChars = true;
                     consecutiveKeyboard = true;
