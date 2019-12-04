@@ -168,6 +168,7 @@ public class Suggest {
                 output.newLine();
                 output.append(newAccount);
                 output.close();
+                System.out.println("Account Created");
             } catch (IOException e) {
                 e.printStackTrace();
             }
