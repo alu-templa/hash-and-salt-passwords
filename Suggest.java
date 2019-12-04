@@ -197,12 +197,23 @@ public class Suggest {
         }
 
         try{
-            Scanner in = new Scanner(new File("commonPasswords.txt"));
+            Scanner in;
+            in = new Scanner(new File("commonPasswords.txt"));
             while(in.hasNextLine()){
                 String s = in.nextLine();
                 if(password.equals(s)){
                     validInputs = false;
                     System.out.println("This password is too common");
+                }
+            }
+            in = new Scanner(new File("passwords.txt"));
+            while(in.hasNextLine()){
+                String s = in.nextLine();
+                String[] sArray = s.split(",");
+                String savedUserName = sArray[0];
+                if(username.equals(savedUserName)){
+                    validInputs = false;
+                    System.out.println("This username is taken");
                 }
             }
             in.close();
