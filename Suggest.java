@@ -177,6 +177,7 @@ public class Suggest {
     }
 
     private static boolean checkSignupInput(String ary[]){
+        String username = ary[0];
         String password = ary[1];
         String keyboard = "qwertyuiopasdfghjklzxcvbnm";
         String inverseKeyboard = "mnbvcxzlkjhgfdsapoiuytrewq";
@@ -209,6 +210,10 @@ public class Suggest {
             e.printStackTrace();
         }
 
+        if(username.contains(",")){
+            validInputs = false;
+            System.out.println("Username must not contain commas");
+        }
         if(password.length() < 8){
             validInputs = false;
             System.out.println("Password must be at least 8 characters long");
