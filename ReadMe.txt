@@ -1,1 +1,4 @@
+JDK: https://developers.redhat.com/products/openjdk/getting-started?success=true&tcWhenSigned=December%2B1%2C%2B2019&tcWhenEnds=November%2B30%2C%2B2020&tcEndsIn=363&tcDuration=364&tcDownloadFileName=java-1.8.0-openjdk-1.8.0.232-3.b09.redhat.windows.x86_64.zip&tcRedirect=5000&tcSrcLink=https%3A%2F%2Fdevelopers.redhat.com%2Fdownload-manager%2Fcontent%2Forigin%2Ffiles%2Fsha256%2F20%2F2048e4676ca411d250f0689e18c5ad3146995ffc3fe4281b4a7608bec4dd5171%2Fjava-1.8.0-openjdk-1.8.0.232-3.b09.redhat.windows.x86_64.zip&p=OpenJDK&pv=October%2B2019&tcDownloadURL=https%3A%2F%2Faccess.cdn.redhat.com%2Fcontent%2Forigin%2Ffiles%2Fsha256%2F20%2F2048e4676ca411d250f0689e18c5ad3146995ffc3fe4281b4a7608bec4dd5171%2Fjava-1.8.0-openjdk-1.8.0.232-3.b09.redhat.windows.x86_64.zip%3F_auth_%3D1575314194_a14f6182bf0140e4703568cbf6109cef
+This jdk contains the verion of Java used for this program.
+
 run: javac Suggest.java && java Suggest
